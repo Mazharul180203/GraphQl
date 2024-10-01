@@ -1,28 +1,93 @@
-const {gql} = require('apollo-server');
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
-   type User {
-    id: ID!
+  scalar JSON
+  scalar Long
+
+  type Action {
+    _id: ID!
+    createdAt: Long!
+    updatedAt: Long
     name: String!
-    email: String!
-    posts: [Post!]!  # Relationship to include posts
+    description: String
+    functionString: String
+    resourceTemplateId: ID
+    resourceTemplate: ResourceTemplate
   }
 
-  type Post {
-    id: ID!
-    title: String!
-    content: String!
-    author: User!  # Relationship back to user
+  type Trigger {
+    _id: ID!
+    createdAt: Long!
+    updatedAt: Long
+    name: String!
+    description: String
+    functionString: String
+    resourceTemplateId: ID
+    resourceTemplate: ResourceTemplate
+  }
+
+  type Response {
+    _id: ID!
+    createdAt: Long!
+    updatedAt: Long
+    name: String!
+    description: String
+    platforms: [ResponsePlatform]
+  }
+
+  type ResponsePlatform {
+    integrationId: ID
+    build: Int
+    localeGroups: [ResponseLocaleGroup]
+  }
+
+  type ResponseLocaleGroup {
+    localeGroupId: ID
+    variations: [ResponseVariation]
+  }
+
+  type ResponseVariation {
+    name: String!
+    responses: JSON
+  }
+
+  type ResourceTemplate {
+    _id: ID!
+    createdAt: Long!
+    updatedAt: Long
+    name: String!
+    description: String
+    schema: JSON
+    integrationId: String
+    functionString: String
+    key: String
+  }
+
+  type NodeObject {
+    _id: ID!
+    createdAt: Long!
+    updatedAt: Long
+    name: String!
+    description: String
+    parents: [NodeObject]
+    parentIds: [ID]
+    root: Boolean
+    trigger: Trigger
+    triggerId: ID
+    responses: [Response]
+    responseIds: [ID]
+    actions: [Action]
+    actionIds: [ID]
+    priority: Float
+    compositeId: ID
+    global: Boolean
+    colour: String
+    resourceTemplate: ResourceTemplate
   }
 
   type Query {
-    user(id: ID!): User
-    posts: [Post!]!
-  }
-
-  type Mutation {
-    createUser(name: String!, email: String!): User
-    createPost(title: String!, content: String!, authorId: ID!): Post
+    node(nodeId: ID!): NodeObject
+    triggers: [Trigger]
   }
 `;
 

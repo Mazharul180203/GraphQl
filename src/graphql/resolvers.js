@@ -1,37 +1,32 @@
-let users = [];
-let posts = [];
-let idCounterUser = 1;
-let idCounterPost = 1;
+const nodeData = require('../files/node.json');
+const actionData = require('../files/action.json');
+const responseData = require('../files/response.json');
+const resourceTemplateData = require('../files/resourceTemplate.json');
+const triggerData = require('../files/trigger.json');
 
 const resolvers = {
     Query: {
-        user: (parent, { id }) => {
-            return users.find(user => user.id === Number(id));
+        node: (_, { nodeId }) => {
+            return nodeData.find(node => node._id === nodeId);
         },
-        posts: () => posts,
+        triggers: () => {
+            return triggerData;
+        }
     },
-    Mutation: {
-        createUser: (parent, { name, email }) => {
-            const newUser = { id: idCounterUser++, name, email };
-            users.push(newUser);
-            return newUser;
+    NodeObject: {
+        actions: (parent) => {
+            return actionData.filter(action => parent.actions && parent.actions.includes(action._id));
         },
-        createPost: (parent, { title, content, authorId }) => {
-            const newPost = { id: idCounterPost++, title, content, authorId: Number(authorId) };
-            posts.push(newPost);
-            return newPost;
+        responses: (parent) => {
+            return responseData.filter(response => parent.responses && parent.responses.includes(response._id));
         },
-    },
-    User: {
-        posts: (parent) => {
-            return posts.filter(post => post.authorId === parent.id);
+        trigger: (parent) => {
+            return triggerData.find(trigger => trigger._id === parent.trigger);
         },
-    },
-    Post: {
-        author: (parent) => {
-            return users.find(user => user.id === parent.authorId);
-        },
-    },
+        resourceTemplate: (parent) => {
+            return resourceTemplateData.find(resourceTemplate => resourceTemplate._id === parent.resourceTemplateId);
+        }
+    }
 };
 
 module.exports = resolvers;
