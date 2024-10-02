@@ -5,17 +5,16 @@ const resolvers = require('./graphql/resolvers');
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => {
-        const authHeader = req.headers.authorization || '';
-        if (!authHeader.startsWith('Bearer ')) {
-            throw new Error('Authorization token missing or invalid');
-        }
-        const token = authHeader.split(' ')[1];
-        // Here you can add logic to verify the token if needed
-        return { token };
+    introspection: true,
+    cors: {
+        origin: '*',
+        credentials: true,
+    },
+    context: () => {
+        return {};
     },
 });
 
-server.listen({ port: 4001}).then(({ url }) => {
+server.listen({ port: 4000 }).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
 });
