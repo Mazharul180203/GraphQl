@@ -7,26 +7,30 @@ const triggerData = require('../files/trigger.json');
 const resolvers = {
     Query: {
         node: (_, { nodeId }) => {
-            return nodeData.find(node => node._id === nodeId);
+            const node = nodeData.find(node => node._id === nodeId);
+            if (!node) {
+                throw new Error(`Node with ID ${nodeId} not found`);
+            }
+            return node;
         },
-        triggers: () => {
-            return triggerData;
-        }
+        triggers: () => triggerData,
     },
     NodeObject: {
         actions: (parent) => {
-            return actionData.filter(action => parent.actions && parent.actions.includes(action._id));
+            if (!parent.actions) return [];
+            return actionData.filter(action => parent.actions.includes(action._id));
         },
         responses: (parent) => {
-            return responseData.filter(response => parent.responses && parent.responses.includes(response._id));
+            if (!parent.responses) return [];
+            return responseData.filter(response => parent.responses.includes(response._id));
         },
         trigger: (parent) => {
             return triggerData.find(trigger => trigger._id === parent.trigger);
         },
         resourceTemplate: (parent) => {
             return resourceTemplateData.find(resourceTemplate => resourceTemplate._id === parent.resourceTemplateId);
-        }
-    }
+        },
+    },
 };
 
 module.exports = resolvers;
