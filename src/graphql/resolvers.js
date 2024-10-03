@@ -12,7 +12,7 @@ const resolvers = {
         login: (_, { username, password }) => {
             if (username === 'testuser' && password === 'password123') {  // static usename and password is set for this applciation it can make dynamic when we use the database
                 const user = { id: 1, username };
-                const token = jwt.sign(user, SECRET_KEY, { expiresIn: '1h' });
+                const token = jwt.sign(user, SECRET_KEY, { expiresIn: '48h' });
                 return token;
             } else {
                 throw new Error('Invalid credentials');

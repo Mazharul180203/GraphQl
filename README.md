@@ -37,7 +37,7 @@ This project implements a GraphQL API using Apollo Server with token-based authe
     ```bash
    npm install
    ```
-3. **Create config.js File: Create a .env file in the root directory of the project and add your secret key:**
+3. **Create config.js File: I explore the config.js file for the project where the secret key is added but normaly it must hide when we push in git for the security purpose:**
     ```bash
     SECRET_KEY=your_very_secure_secret_key
    ```
@@ -149,3 +149,5 @@ As with the previous queries, include the token in the Authorization header:
 ## Token Generation and Usage
     - After logging in and receiving a token, use it to access protected routes.
     - Include the token in the Authorization header for any request that requires authentication.
+
+## I attached the Postman API Documentation in a folder
