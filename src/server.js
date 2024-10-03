@@ -18,8 +18,8 @@ const server = new ApolloServer({
         const authHeader = req.headers.authorization || '';
         let user = null;
 
-        if (authHeader) {
-            const token = authHeader.split(' ')[1];
+        if (authHeader) {    // check that when want to access any api that is related to the user or not
+            const token = authHeader.split(' ')[1]; //  that give the token part
             try {
                 user = jwt.verify(token, SECRET_KEY);
             } catch (err) {

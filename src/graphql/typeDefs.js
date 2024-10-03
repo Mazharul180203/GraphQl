@@ -5,7 +5,7 @@
       scalar Long
       
       type Mutation {
-        login(username: String!, password: String!): String!  # New mutation to return the token
+        login(username: String!, password: String!): String!  
       }
     
       type Action {
