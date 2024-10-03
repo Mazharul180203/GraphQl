@@ -1,19 +1,42 @@
+const jwt = require('jsonwebtoken');
 const nodeData = require('../files/node.json');
 const actionData = require('../files/action.json');
 const responseData = require('../files/response.json');
 const resourceTemplateData = require('../files/resourceTemplate.json');
 const triggerData = require('../files/trigger.json');
+const {SECRET_KEY} = require("../../config");
+
 
 const resolvers = {
+    Mutation: {
+        login: (_, { username, password }) => {
+            if (username === 'testuser' && password === 'password123') {
+                const user = { id: 1, username };
+                const token = jwt.sign(user, SECRET_KEY, { expiresIn: '1h' });
+                return token;
+            } else {
+                throw new Error('Invalid credentials');
+            }
+        },
+    },
     Query: {
-        node: (_, { nodeId }) => {
+        node: (_, { nodeId }, context) => {
+            if (!context.user) {
+                throw new Error('You must be authenticated');
+            }
+
             const node = nodeData.find(node => node._id === nodeId);
             if (!node) {
                 throw new Error(`Node with ID ${nodeId} not found`);
             }
             return node;
         },
-        triggers: () => triggerData,
+        triggers: (_, __, context) => {
+            if (!context.user) {
+                throw new Error('You must be authenticated');
+            }
+            return triggerData;
+        },
     },
     NodeObject: {
         actions: (parent) => {
