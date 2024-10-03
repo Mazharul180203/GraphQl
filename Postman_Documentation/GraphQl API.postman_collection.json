@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "c2a95135-1d9d-415c-aae0-0a550f79c7b9",
+		"name": "GraphQl API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31584748"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n  login(username: \"testuser\", password: \"password123\")\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetNode",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTcyNzk1NjI1OSwiZXhwIjoxNzI4MTI5MDU5fQ.9xTmlbqd6NI-cEN6bPOhwbsSAcS6OwP7IwdBkZDbeMc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetNode($nodeId: ID!) {\n  node(nodeId: $nodeId) {\n    _id\n    name\n    description\n    trigger {\n      _id\n      name\n      description\n    }\n    actions {\n      _id\n      name\n      description\n    }\n    responses {\n      _id\n      name\n      description\n    }\n    resourceTemplate {\n      _id\n      name\n      schema\n    }\n  }\n}\n",
+						"variables": "{\n  \"nodeId\": \"6296be3470a0c1052f89cccb\"\n}\n"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetQAllTiger",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTcyNzk1MDg2NCwiZXhwIjoxNzI3OTU0NDY0fQ.C3IJeaWSsTkP4BtEm9yCVPyol-9Rf_o5JYqyt06q1xE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetAllTriggers {\n  triggers {\n    _id\n    name\n    description\n  }\n}\n",
+						"variables": "{\n  \"nodeId\": \"6296be3470a0c1052f89cccb\"\n}\n"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetActionsByNodeId",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetActionsByNodeId($nodeId: ID!) {\n  node(nodeId: $nodeId) {\n    actions {\n      _id\n      name\n      description\n    }\n  }\n}\n",
+						"variables": "{\n  \"nodeId\": \"629718ba70a0c1836d89cd12\"\n}\n"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetResponsesByNodeID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetResponsesByNodeId($nodeId: ID!) {\n  node(nodeId: $nodeId) {\n    responses {\n      _id\n      name\n    }\n  }\n}\n",
+						"variables": "{\n  \"nodeId\": \"6296be3470a0c1052f89cccb\"\n}\n"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetResourceTemplateByNodeID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetResourceTemplateByNodeId($nodeId: ID!) {\n  node(nodeId: $nodeId) {\n    resourceTemplate {\n      _id\n      name\n      description\n    }\n  }\n}\n",
+						"variables": "{\n  \"nodeId\": \"6296be3470a0c1052f89cccb\"\n}\n"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
