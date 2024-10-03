@@ -33,11 +33,11 @@ This project implements a GraphQL API using Apollo Server with token-based authe
    git clone <repository-url>
    cd <project-directory>
    ```
-2. **Install Dependencies:**:
+2. **Install Dependencies:**
     ```bash
    npm install
    ```
-3. **Create .env File: Create a .env file in the root directory of the project and add your secret key:**:
+3. **Create config.js File: Create a .env file in the root directory of the project and add your secret key:**
     ```bash
     SECRET_KEY=your_very_secure_secret_key
    ```
